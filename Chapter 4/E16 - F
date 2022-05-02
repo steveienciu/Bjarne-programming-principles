@@ -1,0 +1,56 @@
+/*
+In the drill, you wrote a program that, given a series of numbers, found
+the max and min of that series. The number that appears the most times
+in a sequence is called the mode. Create a program that finds the mode of
+a set of positive integers.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main(){
+
+cout << "Please enter positive integers.\n";
+vector<int> numbers;
+vector<int> duplicates;
+int num = 0, modeflag1 = 1, modeflag2 = 1, moden1 = 0, moden2 = 0, val = 0; // initialization
+while (cin >> num) {
+    if (num <= 0)
+        error("Please input positive integers");
+    numbers.push_back(num);
+}
+sort(numbers.begin(), numbers.end());
+    for (int i = 0; i < numbers.size(); ++i) // output the numbers so they are sorted 
+        cout << numbers[i] << " ";
+    for (int i = 0; i < numbers.size(); ++i) {
+        if (numbers[i] == val) {
+            ++modeflag1;
+            moden1 = numbers[i];
+        }
+        if (modeflag1 > modeflag2) {
+            modeflag2 = modeflag1;
+            moden2 = moden1;
+        }
+        else if (moden1 == numbers[i] && modeflag1 <= modeflag2) {
+            modeflag1 = modeflag1;
+        }
+        else { 
+            modeflag1 = 1; // reset
+        }
+        val = numbers[i];
+    }
+    if (modeflag2 < 2) {
+        cout << "\nThere is no mode.";
+    }
+    else {
+        cout << "\nThe mode is " << moden2 << " and it appeared " << modeflag2 << " times.";
+    }
+} // figure out how to deal with dulpicate modes
