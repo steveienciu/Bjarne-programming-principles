@@ -1,0 +1,44 @@
+/*
+Read a sequence of double values into a vector. Think of each value as
+the distance between two cities along a given route. Compute and print
+the total distance (the sum of all distances). Fmd and print the smallest
+and greatest distance between two neighboring cities. Fmd and print the
+mean distance between two neighboring cities.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main() {
+
+    cout << "Provide some distances.\n";
+    vector<double> distance; // vector for distances inputted 
+    double dist = 0, max, min;
+
+    while (cin >> dist) { // do while true
+
+        if (dist < 0 || dist > 100000 || dist == 0) { // error if inputted value meets one of these criterias
+            error("Unknown distance, please try again.");
+        }
+        else {
+            distance.push_back(dist); // store dist into distance vector 
+            double sum = 0; // variable to store sum
+            for (int i = 0; i < distance.size(); ++i) {
+                sum += distance[i];
+            }
+            cout << "The total distance is " << sum << ".\n";
+            sort(distance.begin(), distance.end());
+            cout << "The minumum distance is " << distance[0] << ".\n";
+            cout << "The maximum distance is " << distance[distance.size() - 1] << ".\n";
+            cout << "The median is " << sum / distance.size() << ".\n";
+        }
+    }
+}
