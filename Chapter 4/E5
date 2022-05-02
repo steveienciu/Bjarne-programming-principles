@@ -1,0 +1,53 @@
+/*
+Write a program that performs as a very simple calculator. Your calculator should be able to handle the five basic math operations - add, subtract, multiply, 
+divide, and modulus (remainder) - on two input values.
+Your program should prompt the user to enter three arguments: two
+double values and a character to represent an operation. If the entry arguments are 35.6, 24.1, and '+', the program output should be "The sum
+of 35.6 and 24.1 is 59.7.".
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main() {
+
+    double val1 = 0, val2 = 0; // intiliazation
+    char operation = ' ';
+    cout << "Please enter two values and a mathematical operation (+, -, *, /, %)" << endl;
+    while (cin >> val1 >> val2 >> operation) { // ex. 4 (then hit enter), 2 (then hit enter), + (then hit enter)
+        string oper = " ";
+        double result = 0;
+        switch (operation) {
+        case '+':
+            oper = "The sum of ";
+            result = val1 + val2;
+            break;
+        case '-':
+            oper = "The difference of ";
+            result = val1 - val2;
+            break;
+        case '*':
+            oper = "The product of ";
+            result = val1 * val2;
+            break;
+        case '/': // does not work well when decimals are involved
+            oper = "The quotient of ";
+            result = val1 / val2;
+            break;
+        default:
+            cout << "Why are you stupid? Please enter a correct operation" << endl;
+            break;
+        }
+        cout << oper << val1 << " and " << val2 << " is " << result << endl;
+        cout << "Please enter two values and a mathematical operation (+, -, *, /, %)" << endl;
+        // to exit, enter any non-numerical key
+    }
+}
