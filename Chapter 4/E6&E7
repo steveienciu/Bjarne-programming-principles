@@ -76,7 +76,7 @@ int main() {
             result = val1 / val2;
             break;
         default:
-            cout << "Why are you retarded? Please enter a correct operation" << endl;
+            cout << "Why are you stupid? Please enter a correct operation" << endl;
             break;
         }
         cout << oper << val1 << " and " << val2 << " is " << result << endl;
