@@ -1,0 +1,24 @@
+/*
+Write a program to test an integer value to determine if it is odd or even.
+As always, make sure your output is clear and complete. In other words,
+don't just output "yes" or "no." Your output should stand alone, like
+"The value 4 is an even number." Hint: See the remainder (modulo) operator in §3.4.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+
+    cout << "Enter a number: " << endl;
+    int val = 0; // initialize the variable 
+    cin >> val; // prompt user to input a value 
+    string res = "even";
+    if (val % 2) // divide by two and if there is a remainder, the number is odd
+        res = "odd";
+    cout << "The value " << val << " is an " << res << " number";
+}
