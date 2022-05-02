@@ -1,0 +1,9 @@
+int main(){ // C++ programs start by executing the main function
+
+    cout << "Please enter a number" << endl;
+    double miles = 0;
+    cin >> miles;
+    cout << miles << " miles is " << miles*1.609 << " kilometers."
+    << endl;
+    return 0;
+}
