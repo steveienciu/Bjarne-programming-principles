@@ -1,0 +1,40 @@
+/*
+Add to the program so that it can also convert from Kelvin to Celsius
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+double ktoc(double k) { // convert Kelvin to Celsius 
+    if (k < 0) {
+        error("This is below absolute zero.");
+    }
+    double c = k - 273.15;
+    return c;
+}
+
+double ctok(double c) { // convert Celsius to Kelvin
+    if (c < -273.15) {
+        error("This is below absolute zero.");
+    }
+    double k = c + 273.15;
+    return k;
+}
+int main() {
+    cout << "Please provide a temperature in Celsius and Kelvins\n";
+    double c = 0, k = 0; // declare input variables
+    cin >> c; // retrieve temperature to input variable
+    cin >> k; // retrieve temperature to input variable 
+    double k1 = ctok(c); // convert to Celsius
+    double c1 = ktoc(k); // convert to Kelvins
+    cout << c << " degrees Celsius converted to Kelvins is " << k1 << " Kelvins\n"; // print out temperature
+    cout << k << " Kelvins converted to Celsius is " << c1 << " degrees Celsius\n"; // print out temperature 
+}
