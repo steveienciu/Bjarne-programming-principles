@@ -1,0 +1,78 @@
+/*
+Implement a little guessing game called (for some obscure reason) .. Bulls
+and Cows." The program has a vector of four integers in the range 0 to 9
+and it is the user's task to discover those numbers by repeated guesses.
+Say the number to be guessed is 1234 and the user guesses 1359; the response should be "1 bull and 1 cow" because the user got one digit ( 1)
+right and in the right position (a bull) and one digit (3) right but in the
+wrong position (a cow). The guessing continues until the user gets four
+bulls, that is, has the four digits correct and in the correct order.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main() {
+    vector<int> secret = { 0, 6, 8, 1 }; // hard coded answer 
+    vector<int> guesses;
+    int guess, bull = 0, cow = 0;
+    cout << "Please input 4 integer guesses, no duplicates.\n";
+    while (secret != guesses) { // play until user guesses the correct answer 
+        for (int n = 0; n < secret.size(); ++n) { 
+            cin >> guess;
+            if (guess < 0 || guess > 10) // integer must stay within range 
+                error("Invalid integer");
+            guesses.push_back(guess);
+        }
+        for (int i = 0; i < secret.size(); ++i) {
+            if (guesses[i] == secret[i]) { 
+                ++bull; // increment variable for every correct number and placement 
+            }
+            else {
+                for (int j = 0; j < guesses.size(); ++j) {
+                    if (secret[i] == guesses[j]) {
+                        ++cow; // increment variable for correct number but wrong placement 
+                    }
+                }
+            }
+        }
+        // creation of the correct output statement 
+        if (bull > 1 && cow > 1)
+            cout << "\n" << bull << " bulls and " << cow << " cows\n";
+        else if (bull > 1 && cow < 1)
+            cout << bull << " bulls\n";
+        else if (bull > 1 && cow == 1)
+            cout << "\n" << bull << " bulls and " << cow << " cow\n";
+        else if (bull == 1 && cow < 1)
+            cout << "\n" << bull << " bull\n";
+        else if (cow > 1 && bull < 1)
+            cout << "\n" << cow << " cows\n";
+        else if (cow > 1 && bull == 1)
+            cout << "\n" << bull << " bull and " << cow << " cows\n";
+        else if (cow == 1 && bull < 1)
+            cout << "\n" << cow << " cow\n";
+        else if (bull == 1 && cow == 1)
+            cout << "\n" << bull << " bull and " << cow << " cow\n";
+        else
+            cout << "\nDonut\n"; // stated if user did not guess anything correctly 
+        // reset the cow and bull variable for the next guess 
+        cow = 0;
+        bull = 0;
+        // clear the guesses from the vector to allow for new guesses 
+        if (secret != guesses)
+            guesses.clear();
+    }
+    cout << "\nCongrats you won.\n";
+}
+
+/*
+Update to allow for duplicates and create a random 4 digit number instead
+Allow for user to see how many guesses it took them to get the answer 
+*/
