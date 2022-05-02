@@ -12,19 +12,20 @@ these values and report them to the user.
 
 using namespace std;
 
-int main() { // C++ programs start by executing the main function
+int main() { 
 
     cout << "Enter two number: " << endl;
+    // initialize the two variables 
     int val1 = 0;
     int val2 = 0;
-    cin >> val1 >> val2;
-    if (val1 < val2) {
+    cin >> val1 >> val2; // prompt user to input two values 
+    if (val1 < val2) { // perform if the first value inputed is less than the second
         cout << "The smallest number is " << val1 << endl;
     }
     else {
         cout << "The largest number is " << val1 << endl;
     }
-    if (val1 > val2) {
+    if (val1 > val2) { // perform if the first value inputed is greater than the second
         cout << "The smallest number is " << val2 << endl;
     }
     else {
