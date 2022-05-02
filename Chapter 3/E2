@@ -1,9 +1,20 @@
-int main(){ // C++ programs start by executing the main function
+/*
+Write a program in C++ that converts from miles to kilometers. Your
+program should have a reasonable prompt for the user to enter a number
+of miles. Hint: There are 1.609 kilometers to the mile.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() { // C++ programs start by executing the main function
 
     cout << "Please enter a number" << endl;
     double miles = 0;
-    cin >> miles;
-    cout << miles << " miles is " << miles*1.609 << " kilometers."
-    << endl;
-    return 0;
+    cin >> miles; // prompt user to enter a value
+    cout << miles << " miles is " << miles * 1.609 << " kilometers." << endl;
 }
