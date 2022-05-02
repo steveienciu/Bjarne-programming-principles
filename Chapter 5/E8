@@ -1,0 +1,45 @@
+/*
+Write a program that reads a series of numbers and stores them in a
+vector<inl>. After the user inputs all the numbers he or she wishes to,
+ask how many of the numbers the user wants to sum. For an answer N.
+print the sum of the first N elements of the vector.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main() {
+    // initialization
+    vector<int> numbers;
+    int val = 0, x = 0; 
+    cout << "Please enter how many numbers you want to be summed.\n";
+    cin >> x;
+    if (x < 2)
+        error("Please input a larger integer");
+
+    cout << "Please enter a set of integers.\n";
+    while (cin >> val) {
+        if (val < 0)
+            error("Invalid integer");
+        numbers.push_back(val);
+    }
+    int sum = 0;
+    cout << "The sum of the first " << x << " numbers: ";
+    for (int i = 0; i < x; ++i) { 
+        sum += numbers[i]; // sum the numbers specified 
+        // output statement creation 
+        if (i < x - 1)
+            cout << numbers[i] << ", ";
+        else if (i == x - 1)
+            cout << "and " << numbers[i] << " ";
+    }
+    cout << "is " << sum;
+}
