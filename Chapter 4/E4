@@ -1,0 +1,57 @@
+/*
+Write a program to play a numbers guessing game. The user thinks of a
+number between 1 and 100 and your program asks questions to figure
+out what the number is (e.g., "Is the number you are thinking of less
+than 50?"). Your program should be able to identify the number after
+asking no more than seven questions. Hint: Use the < and <= operators
+and the if-else construct.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main() {
+    char answer;
+    // initialization
+    int guess = 50;
+    int questions = 0;
+
+    vector<int> dif(6);
+    dif[0] = 25;
+    dif[1] = 13;
+    dif[2] = 6;
+    dif[3] = 3;
+    dif[4] = 2;
+    dif[5] = 1;
+
+    cout << "Lets play a game...\n" << endl;
+    cout << "Think of a number between 1 and 100. \n";
+    cout << "c = correct  l = lower   h = higher\n";
+    cout << "Is it 50?\n";
+
+    while (cin >> answer) {
+        ++questions; // used to help with the guess
+        if (answer == 'c') {
+            cout << "Yay, we guessed your answer.\n";
+        }
+        else if (answer == 'l' && questions <= dif.size()) {
+            guess -= dif[questions - 1];
+            cout << "Is your answer " << guess << "?\n";
+        }
+        else if (answer == 'h' && questions <= dif.size()) {
+            guess += dif[questions - 1];
+            cout << "Is your answer " << guess << "?\n";
+        }
+        else if (answer != 'c' || answer != 'h' || answer != 'l' || questions > dif.size()) {
+            error("You messed up >:(");
+        }
+    }
+}
