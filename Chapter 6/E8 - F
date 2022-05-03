@@ -1,0 +1,70 @@
+/*
+Redo the "Bulls and Cows" game from exercise 12 in Chapter 5 to use
+four letters rather than four digits.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main() {
+    vector<char> secret = { 'a', 'b', 'c', 'd' }; // hard coded answer 
+    vector<char> guesses;
+    int bull = 0, cow = 0;
+    char guess;
+    cout << "Please input 4 alphabet guesses, no duplicates.\n";
+    while (secret != guesses) {
+        for (int n = 0; n < secret.size(); ++n) {
+            cin >> guess; // input 4 lower case letters
+            if (guess < 'a' || guess > 'z') // guesses must be within range 
+                error("Invalid input");
+            guesses.push_back(guess);
+        }
+        for (int i = 0; i < secret.size(); ++i) {
+            if (guesses[i] == secret[i]) {
+                ++bull; // increment variable if letter is correct and in right spot 
+            }
+            else {
+                for (int j = 0; j < guesses.size(); ++j) {
+                    if (secret[i] == guesses[j]) {
+                        ++cow; // increment variable if letter is correct but not in right spot
+                    }
+                }
+            }
+        }
+        if (bull > 1 && cow > 1)
+            cout << "\n" << bull << " bulls and " << cow << " cows\n";
+        else if (bull > 1 && cow < 1)
+            cout << "\n" << bull << " bulls\n";
+        else if (bull > 1 && cow == 1)
+            cout << "\n" << bull << " bulls and " << cow << " cow\n";
+        else if (bull == 1 && cow < 1)
+            cout << "\n" << bull << " bull\n";
+        else if (cow > 1 && bull < 1)
+            cout << "\n" << cow << " cows\n";
+        else if (cow > 1 && bull == 1)
+            cout << "\n" << bull << " bull and " << cow << " cows\n";
+        else if (cow == 1 && bull < 1)
+            cout << "\n" << cow << " cow\n";
+        else if (bull == 1 && cow == 1)
+            cout << "\n" << bull << " bull and " << cow << " cow\n";
+        else
+            cout << "\nhuh\n";
+        cow = 0;
+        bull = 0;
+        if (secret != guesses)
+            guesses.clear();
+    }
+    cout << "\nCongrats you won.\n";
+}
+
+/*
+Update the same things as the one with numbers
+*/
