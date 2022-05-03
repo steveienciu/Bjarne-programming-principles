@@ -1,0 +1,56 @@
+/*
+Create a vector of Fibonacci numbers and print them using the function
+from exercise 2. To create the vector, write a function, fibonacci(x,y,v,n),
+where integers x and y are ints, v is an empty vector<int>, and n is the
+number of elements to put into v; v[O] will be x and v[1] will be y. A
+Fibonacci number is one that is part of a sequence where each element is
+the sum of the two previous ones. For example, starting with 1 and 2, we
+get 1, 2, 3, 6, 9, 15, 24, . . . . Your fibonacci() function should make such
+a series starting with its x and y arguments.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <math.h>
+
+using namespace std;
+
+void error(string s) {
+	throw runtime_error(s);
+}
+
+void fibanocci(int x, int y, vector<int>& v, int& n) {
+	int sum = 0; // create variable to hold next fibanocci number
+	x = 1, y = 2;
+	v.push_back(x), v.push_back(y); 
+
+	cout << "Please input number of iterations wanting to complete: ";
+	cin >> n;
+
+	if (n < 1) {
+		error("Input a number greater than 0.");
+	}
+
+	for (int i = 1; i < n; ++i) {
+		sum = v[i] + v[i - 1]; // add the new iteration with the old one
+		v.push_back(sum); // add new number into vector
+	}
+}
+
+void print(vector<int>& num, string label) {
+	int a = 0, b = 0, c = 0;
+	fibanocci(a, b, num, c);
+	label = "The output for the first ";
+
+	cout << label << c << " iterations is: ";
+	for (int i = 0; i < c; ++i) {
+		cout << num[i] << " "; // print out fibanocci numbers 
+	}
+}
+
+int main() {
+	vector<int> num;
+	string label = " ";
+	print(num, label);
+}
