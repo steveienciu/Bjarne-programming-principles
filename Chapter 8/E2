@@ -1,0 +1,26 @@
+/*
+Write a function print() that prints a vector of ints to cout. Give it two arguments: a string for "labeling" the output and a vector.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+void print(vector<int> num, string label) { // function that prints vector of integers
+	int a;
+	label = "Output ";
+	while (cin >> a) // perform until a bad input is entered 
+		num.push_back(a);
+	for (int i = 0; i < num.size(); ++i)
+		cout << label << (i+1) << ": " << num[i] << endl; // output statement 
+}
+
+
+int main() {
+	vector<int> a;
+	string label;
+	cout << "Please enter some numbers.\n";
+	print(a, label);
+}
