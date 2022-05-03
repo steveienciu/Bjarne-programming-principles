@@ -1,0 +1,97 @@
+/*
+Write a program that reads digits and composes them into integers. For
+example, 123 is read as the characters 1, 2, and 3. The program should
+output "123 is 1 hundred and 2 tens and 3 ones". The number should be
+output as an int value. Handle numbers with one, two, three, or four
+digits. Hint: To get the integer value 5 of the character '5' subtract '0',
+that is, '5'-'0'==5.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main()
+{
+    vector<int> digits;
+    int dig;
+    string t;
+    string s1 = " thousands ", s2 = " thousand ", s3 = " hundreds ", s4 = " hundred ", s5 = " tens ", s6 = " ten ", s7 = " ones ", s8 = " one ";
+    cout << "Please input a number with up to four digits.\n";
+
+    cin >> t; // input string of up to 4 digits 
+    for (int i = 0; i < t.size(); ++i) {
+        if (t.size() > 4) // error if size of string greater than 4
+            error("Number is too large.");
+        if (t[i] <= '9' && t[i] >= '0') { // needs to be within this range 
+            dig = t[i] - '0'; // get integer value 
+            digits.push_back(dig);
+        }
+        else
+            error("Not an integer.");
+    }
+
+    for (int i = 0; i < digits.size(); ++i) {
+        cout << digits[i];
+    }
+    cout << " is ";
+    // output if the number is 4 digits 
+    if (digits.size() == 4) {
+        if (digits[0] == 0 || digits[0] > 1)
+            cout << digits[0] << s1;
+        else if (digits[0] == 1)
+            cout << digits[0] << s2;
+        if (digits[1] == 0 || digits[1] > 1)
+            cout << "and " << digits[1] << s3;
+        else if (digits[1] == 1)
+            cout << "and " << digits[1] << s4;
+        if (digits[2] == 0 || digits[2] > 1)
+            cout << "and " << digits[2] << s5;
+        else if (digits[2] == 1)
+            cout << "and " << digits[2] << s6;
+        if (digits[3] == 0 || digits[3] > 1)
+            cout << "and " << digits[3] << s7;
+        else if (digits[3] == 1)
+            cout << "and " << digits[3] << s8;
+    }
+    // output if the number is 3 digits 
+    if (digits.size() == 3) {
+        if (digits[0] == 0 || digits[0] > 1)
+            cout << digits[0] << s3;
+        else if (digits[0] == 1)
+            cout << digits[0] << s4;
+        if (digits[1] == 0 || digits[1] > 1)
+            cout << "and " << digits[1] << s5;
+        else if (digits[1] == 1)
+            cout << "and " << digits[1] << s6;
+        if (digits[2] == 0 || digits[2] > 1)
+            cout << "and " << digits[2] << s7;
+        else if (digits[2] == 1)
+            cout << "and " << digits[2] << s8;
+    }
+    // output if the number is 2 digits 
+    if (digits.size() == 2) {
+        if (digits[0] == 0 || digits[0] > 1)
+            cout << digits[0] << s5;
+        else if (digits[0] == 1)
+            cout << digits[0] << s6;
+        if (digits[1] == 0 || digits[1] > 1)
+            cout << "and " << digits[1] << s7;
+        else if (digits[1] == 1)
+            cout << "and " << digits[1] << s8;
+    }
+    // output if the number is 1 digits 
+    if (digits.size() == 1) {
+        if (digits[0] == 0 || digits[0] > 1)
+            cout << digits[0] << s7;
+        else if (digits[0] == 1)
+            cout << digits[0] << s8;
+    }
+} // can this be optimized?
