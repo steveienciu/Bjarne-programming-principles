@@ -1,0 +1,69 @@
+/*
+Design a program that asks users for two numbers, asks them whether
+they want to calculate permutations or combinations, and prints out the
+result.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+int main() {
+    int x1, x2, x3, x4, x5, perm1, perm2 = 0, permf, comb1, comb2, comb3, combf = 0;
+    char ch;
+    cout << "Please enter two numbers and either 'c' for combination or 'p' for permutation.\n";
+    cout << "Enter 'n' to exit.\n";
+    while (cin >> x1 >> x2 >> ch && ch != 'n') {
+        if (x1 < 0 || x2 < 0)
+            error("Number needs to be positive");
+        if (x1 < x2)
+            error("First number needs to be greater than the second");
+        x3 = x1 - x2;
+        x4 = x1;
+        x5 = x2;
+        if (x2 == 0)
+            comb2 = 1;
+        if (ch == 'p') {
+            for (int i = x4 - 1; i > 1; --i) {
+                perm1 = x4 * i;
+                x4 = perm1;
+            }
+            cout << perm2 << endl;
+            for (int i = x3 - 1; i > 1; --i) {
+                perm2 = x3 * i;
+                x3 = perm2;
+            }
+            permf = perm1 / perm2;
+            cout << "The permutation of " << x1 << " and " << x2 << " is " << permf << endl;
+        }
+        if (ch == 'c') {
+            for (int i = x4 - 1; i > 1; --i) {
+                comb1 = x4 * i;
+                x4 = comb1;
+            }
+            cout << comb2 << endl;
+            for (int i = x5 - 1; i > 1; --i) {
+                comb2 = x5 * i;
+                x5 = comb2;
+                cout << "yo" << endl;
+            }
+            for (int i = x3 - 1; i > 1; --i) {
+                comb3 = x3 * i;
+                x3 = comb3;
+            }
+            cout << comb1 << " " << comb2 << " " << comb3 << " " << combf << endl;
+            combf = comb1 / (comb2 * comb3);
+            cout << "The combination of " << x1 << " and " << x2 << " is " << combf << endl;
+        }
+        cout << "Please enter two numbers and either 'c' for combination or 'p' for permutation.\n";
+        cout << "Enter 'n' to exit.\n";
+    }
+    cout << "pce";
+} // giving an error. Fix when have time
