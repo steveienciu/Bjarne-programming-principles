@@ -1,0 +1,41 @@
+*
+Write a function maxv() that returns the largest element of a vector
+argument
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+	throw runtime_error(s);
+}
+
+void set_max(vector<double>& maxv1) { // add elements into a vector
+	double dig = 0.0;
+	cout << "Please enter some integers. Enter 'n' when completed.\n";
+	while (cin >> dig) {
+		maxv1.push_back(dig);
+	}
+	if (maxv1.size() == 0) {
+		error("There needs to be at least one element inside the vector.");
+	}
+}
+
+void get_max(vector<double>& maxv2) { // print the largest element inside the vector
+	sort(maxv2.begin(), maxv2.end()); // sort the elements from smallest to largest
+	string label = "The largest element is ";
+	
+	cout << label << maxv2[maxv2.size() - 1]; // print out the last element of the vector
+}
+
+int main() {
+	vector<double> maxv;
+
+	set_max(maxv);
+	get_max(maxv);
+
+}
