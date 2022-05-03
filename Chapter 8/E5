@@ -1,0 +1,38 @@
+/*
+Write two functions that reverse the order of elements in a vector<int>.
+For example, 1, 3, 5, 7, 9 becomes 9, 7, 5, 3, 1. The first reverse function
+should produce a new vector with the reversed sequence, leaving its original vector unchanged. The other reverse function should reverse the elements of its vector without 
+using any other vectors (hint: swap).
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <math.h>
+
+using namespace std;
+
+void error(string s) {
+    throw runtime_error(s);
+}
+
+void swap1(const vector<int>& num1) { // function to reverse the users input
+    for (int i = num1.size() - 1; i >= 0; --i) { 
+        cout << num1[i] << " ";
+    }
+}
+
+int main() {
+    vector<int> num;
+    int dig = 0;
+    char ch = ' ';
+    cout << "Please enter a set of numbers. Enter 'n' when completed.\n";
+    while (cin >> dig) {
+        num.push_back(dig);
+    }
+    for (int i = 0; i < num.size(); ++i) {
+        cout << num[i] << " "; // output the vector in the correct order 
+    }
+    cout << "\n";
+    swap1(num); // output the vector in reversed order 
+}
