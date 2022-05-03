@@ -1,0 +1,48 @@
+/*
+Write a function that given two vector<double>s price and weight computes a value (an "index") that is the sum of all price[i)*weight[i].
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+	throw runtime_error(s);
+}
+
+void set_price_weight(vector<double>& price, vector<double>& weight) { // function to obtain the user inputs 
+	double p, w;
+	cout << "Please input a weight followed by the price.\n";
+	while (cin >> p >> w) {
+		if (p < 0 || w < 0) { // cannot have a price of 0 or less
+			error("Input needs to be greater than zero.");
+		}
+		price.push_back(p);
+		weight.push_back(w);
+		cout << "Please input a weight followed by the price. When done, enter 'n'.\n";
+	}
+	if (price.size() != weight.size()) { // need to have the same number of price and weight inputs 
+		error("Incorrect number of inputs.");
+	}
+}
+
+void get_price_weight(const vector<double>& price, const vector<double>& weight) { // function to compute the desired value  
+	double sum = 0; // initialize the variable 
+	string label = "The total sum is ";
+	for (int i = 0; i < weight.size(); ++i) {
+		sum = weight[i] * price[i] + sum; // computes the total sum
+	}
+	cout << label << sum; // output statement 
+}
+
+int main() {
+	double sum = 0;
+	string label = " ";
+	vector<double> price;
+	vector<double> weight;
+	set_price_weight(price, weight);
+	get_price_weight(price, weight);
+}
