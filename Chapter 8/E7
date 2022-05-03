@@ -1,0 +1,77 @@
+/*
+Read five names into a vector<string> name, then prompt the user for the
+ages of the people named and store the ages in a vector<double> age. Then
+print out the five (name[i],age[i]) pairs. Sort the names (sort(name.begin(),
+name.end())) and print out the (name[i],age[i]) pairs. The tricky part here
+is to get the age vector in the correct order to match the sorted name
+vector. Hint: Before sorting age, take a copy and use that to make a copy of
+age in the right order after sorting age. Then, do that exercise again but allowing an arbitrary number of names.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+	throw runtime_error(s);
+}
+
+void get_name(vector<string>& name, string nam) { // allow input of the names 
+	cout << "Please insert 5 names. When done, press 'n'.\n";
+	while (cin >> nam && nam != "n") {
+		name.push_back(nam);
+		if (name.size() > 5) {
+			error("Incorrect number of names entered.");
+		}
+	}
+}
+
+void get_age(vector<int>& age, int num) { // allow input of the ages corresponding to the names 
+	cout << "Please insert the ages of the 5 name. When done, press 'n'\n";
+	while (cin >> num) {
+		if (num > 99 || num <= 0) {
+			error("Invalid age.");
+		}
+		age.push_back(num);
+		if (age.size() > 5) {
+			error("Incorrect number of ages entered.");
+		}
+	}
+}
+
+void print(const vector<string>& printname, const vector<int>& printage) { // print the name, age pairs
+	for (int i = 0; i < printname.size(); ++i) {
+		cout << printname[i] << ": " << printage[i] << endl;
+	}
+}
+
+void sort_names(vector<string> name_copy, vector<string>& name, vector<int> age_copy, vector<int>& age) {
+	sort(name.begin(), name.end());
+
+	for (int i = 0; i < name.size(); ++i) { // go through each member of sorted name
+		for (int j = 0; j < name.size(); ++j) { // go through each member of orginal copy
+			if (name[i] == name_copy[j]) { // if sorted name matches orignal
+				age[i] = age_copy[j]; // assign orginal age to new position to match sorted vector
+			}
+		}
+	}
+}
+
+int main() {
+	string name = " ";
+	int age = 0;
+	vector<string> names;
+	vector<int> ages;
+
+	get_name(names, name);
+	get_age(ages, age);
+	print(names, ages);
+
+	cout << "\n";
+	
+	sort_names(names, names, ages, ages);
+	print(names, ages);
+}
