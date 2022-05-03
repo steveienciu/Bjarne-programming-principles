@@ -1,0 +1,62 @@
+/*
+Write a function that finds the smallest and the largest element of a
+vector argument and also computes the mean and the median. Do not
+use global variables.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// function to obtain a vector set 
+void set_numbers(vector<double>& num) {  
+	int number = 0;
+	cout << "Please input a series of postive numbers. Enter 'n' once finished.\n";
+	while (cin >> number) {
+		if (number < 0) { // throw error if number entered is negative 
+			error("Please input a postivie number.");
+		}
+		num.push_back(number);
+	}
+	if (num.size() == 0) { // throw error if no numbers are inputted
+		error("Please input some values.");
+	}
+}
+
+// function to compute the values 
+void compute_numbers(vector<double>& num1, int& sum) { 
+	for (int i = 0; i < num1.size(); ++i) {
+		sum = num1[i] + sum; // used to find the meam
+	}
+	sort(num1.begin(), num1.end()); // used to find median, largest and smallest value 
+}
+
+// function to print the output statements, const used because sum and vector values do not change 
+void get_numbers(const vector<double>& num2, const int& sum1) {  
+	cout << "The smallest element is " << num2[0] << endl;
+	cout << "The largest element is " << num2[num2.size() - 1] << endl;
+	cout << "The mean of the set of elements is " << sum1 / num2.size() << endl;
+	// different median outcomes depending on how many elements are in the vector
+	if (num2.size() % 2 == 0) {
+		cout << "The median of the set of elements is " << (num2[(num2.size() - 1) / 2] + num2[(num2.size() + 1) / 2]) / 2;
+	}
+	else {
+		cout << "The median of the set of elements is " << num2[(num2.size() - 1) / 2] << endl;
+	}
+}
+
+int main() {
+	vector<double> nums; // double vector type used incase of the median being a decimal
+	int sum = 0;
+
+	set_numbers(nums);
+	compute_numbers(nums, sum);
+	get_numbers(nums, sum);
+}
