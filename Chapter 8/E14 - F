@@ -1,0 +1,87 @@
+/*
+Write a function that takes a vector<String> argument and returns a
+vector<int> containing the number of characters in each string. Also fmd
+the longest and the shortest string and the lexicographically first and last
+string.
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+///*
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// function for user input 
+void set_string(vector<string>& words1) {
+	string word = " ";
+	cout << "Please enter a set of words. When done, enter 'n'.\n";
+	while (cin >> word && word != "n") { // input a bunch of words
+		words1.push_back(word);
+	}
+	if (words1.size() == 0) {
+		error("Please input some words");
+	}
+}
+
+// function to output the number of characters in each word
+void set_number_in_string(vector<string>& words2, vector<int>& numbers2) {
+	// obtain numebr of characters in each string
+	for (int i = 0; i < words2.size(); ++i) {
+		numbers2.push_back(words2[i].size());
+	}
+}
+
+// function to sort the words for shortest to longest 
+void sort_vectors(vector<string> words_copy, vector<string>& words3, vector<int> numbers_copy, vector<int>& numbers3) {
+	sort(numbers3.begin(), numbers3.end()); // sort the number of characters from lowest to highest in length 
+
+	for (int i = 0; i < words3.size(); ++i) { // go through the sorted elements
+		for (int j = 0; j < words3.size(); ++j) { // go through the orginal copy
+			if (numbers3[i] == numbers_copy[j]) { // if sorted number matches orginal 
+				words3[i] = words_copy[j]; // assign orginal word to new position to match sorted vector
+			}
+		}
+	}
+}
+
+// function to print the word and its length 
+void print(vector<string>& printword, vector<int>& printnumber) {
+	cout << "\n";
+	for (int i = 0; i < printword.size(); ++i) {
+		cout << "The word " << printword[i] << " has " << printnumber[i] << " letters." << endl;
+	}
+	cout << "\n";
+}
+
+// function to print the lexicographically lowest and highest word
+void print_lexicogeaphically(vector<string>& printword) {
+	sort(printword.begin(), printword.end()); // sort the words in alphabetical order
+
+	cout << "The lexicographically first word is " << printword[0] << endl;
+	cout << "The lexicographically last word is " << printword[printword.size() - 1] << endl;
+	cout << "\n";
+}
+
+// function to pirnt the shortest and longest word 
+void print_size(vector<string>& printword, vector<int>& printnumber) {
+	cout << "The shortest word is " << printword[0] << endl;
+	cout << "The longest word is " << printword[printword.size() - 1] << endl;
+	cout << "\n";
+}
+
+int main() {
+	vector<string> words;
+	vector<int> numbers;
+
+	set_string(words);
+	set_number_in_string(words, numbers);
+	print(words, numbers);
+	sort_vectors(words, words, numbers, numbers);
+	print_size(words, numbers);
+	print_lexicogeaphically(words);
+} // fix so it deals with duplicates 
