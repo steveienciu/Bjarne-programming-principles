@@ -84,4 +84,4 @@ int main() {
 	sort_vectors(words, words, numbers, numbers);
 	print_size(words, numbers);
 	print_lexicogeaphically(words);
-} // fix so it deals with duplicates 
+} 
