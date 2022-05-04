@@ -56,7 +56,7 @@ void print(vector<string>& printword, vector<int>& printnumber) {
 		cout << "The word " << printword[i] << " has " << printnumber[i] << " letters." << endl;
 	}
 	cout << "\n";
-}
+} 
 
 // function to print the lexicographically lowest and highest word
 void print_lexicogeaphically(vector<string>& printword) {
