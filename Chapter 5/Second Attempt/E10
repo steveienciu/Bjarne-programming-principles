@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// modfication of E8 which makes a vector of doubles containing the N-1 differences between adjacent values
+// writes out the results 
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+int main() {
+	try {
+		vector<double> values;
+		vector<double> diffs;
+		double value = 0.0, sum = 0.0, diff = 0.0;
+		int n = 0;
+
+		cout << "Please enter some positive numbers (press '0' at prompt to stop):\n\n";
+		while (cin >> value && value != 0) {
+			// display error if negative number was inputted
+			if (value < 0) {
+				error("Negaitve number was inputted. Please input only positive numbers.\n");
+			}
+			values.push_back(value);
+		}
+
+		cout << "\nPlease enter how many of the numbers you wish to sum starting form the first:\n\n";
+		cin >> n;
+
+		// errors for out of range values 
+		if (n <= 0) {
+			error("Negative number or zero was inputted. Please input a positive number.\n");
+		}
+		else if (n > values.size()) {
+			error("Number is out of range. Please input a number less than or equal to the size of the data set.\n");
+		}
+
+		// logic to compute the sum
+		for (int i = 0; i < n; ++i) {
+			sum += values[i];
+		}
+
+		// logic to compute the adjacent differneces
+		for (int i = 1; i < values.size(); ++i) {
+			diff = values[i] - values[i - 1];
+			diffs.push_back(diff);
+		}
+
+		// logic to produce the output of sums
+		cout << "\nThe sum of the first " << n << " numbers: ";
+		for (int i = 0; i < n; ++i) {
+			if (i <= (n - 2)) {
+				cout << values[i] << ", ";
+			}
+			else if (i == (n - 1)) {
+				cout << "and " << values[i];
+			}
+		}
+		cout << " is " << sum << endl;
+
+		// logic to produce the output of adjacent differences in the vector 
+		cout << "\nThe difference between adjacent values of the vector are: ";
+		for (int i = 0; i < diffs.size(); ++i) {
+			if (i <= (diffs.size() - 2)) {
+				cout << diffs[i] << ", ";
+			}
+			else if (i == (diffs.size() - 1)) {
+				cout << "and " << diffs[i] << endl;
+			}
+		}
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs 
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
