@@ -1,0 +1,99 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+/*
+Collect all the values for each day of the week in a vector<int>. Write out
+the values of the seven day-of-the-week vectors. Print out the sum of the
+values in each vector. Ignore illegal days of the week, such as Funday, but
+accept common synonyms such as Mon and monday. Write out the number of rejected values. 
+*/
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+int main() {
+	try {
+		vector<int>values;
+		vector<string> inputdays;
+		vector<string> gooddays;
+		vector<string> days{ "Monday", "monday", "Mon", "mon", "Tuesday", "tuesday", "Tues", "tues", "Wednesday", "wednesday", "Wed", "wed", "Thursday", "thursday", "Thurs", "thurs",
+		"Friday", "friday", "Fri", "fri", "Saturday", "saturday", "Sat", "sat", "Sunday", "sunday", "Sun", "sun" };
+		string day = " ";
+		int value = 0, counter = 0, sum = 0;
+
+		// add inputted values in their correct vector
+		while (cin >> day >> value) {
+			if (inputdays.size() > 6) {
+				error("Too many days have been inputted.\n");
+			}
+			inputdays.push_back(day);
+			values.push_back(value);
+		}
+
+		// logic to find the correct inputted days of the week words
+		for (int i = 0; i < inputdays.size(); ++i) {
+			for (int j = 0; j < days.size(); ++j) {
+				if (inputdays[i] == days[j]) {
+					++counter;
+				}
+				if (counter == 1) {
+					gooddays.push_back(inputdays[i]);
+					counter = 0;
+					break;
+				}
+			}
+		}
+
+		// logic to produce the sum inside the values vector 
+		for (int i = 0; i < values.size(); ++i) {
+			sum += values[i];
+		}
+		cout << "\nThe sum of the integers inputted is " << sum << "\n";
+
+		// logic to output the days of the week words that were inputted properly
+		if (gooddays.size() == 0) {
+			cout << "\nThere were no proper inputs.\n";
+		}
+		else if (gooddays.size() == 1) {
+			cout << "\nThe day of the week inputted is: ";
+			for (int i = 0; i < gooddays.size(); ++i) {
+				cout << gooddays[i] << "\n";
+			}
+		}
+		else if (gooddays.size() > 1) {
+			cout << "\nThe days of the week inputted are: ";
+			for (int i = 0; i < gooddays.size(); ++i) {
+				if (i == gooddays.size() - 1) {
+					cout << "and " << gooddays[i] << endl;
+				}
+				else {
+					cout << gooddays[i] << ", ";
+				}
+			}
+		}
+		
+		// logic to output the number of rejected words
+		if (inputdays.size() - gooddays.size() == 0 || inputdays.size() - gooddays.size() > 1) {
+			cout << "\nThe number of rejected words are " << inputdays.size() - gooddays.size() << endl;
+		}
+		else if (inputdays.size() - gooddays.size() == 1) {
+			cout << "\nThe number of rejected words is " << inputdays.size() - gooddays.size() << endl;
+		}
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
