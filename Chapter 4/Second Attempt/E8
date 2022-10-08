@@ -1,0 +1,23 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+// find how many sqaures it takes to reach the specified value if after each squre the value doubles
+
+int main() {
+
+	int total = 0, current_square = 0, previous_square = 0, user_input = 0, square = 0;
+
+	cout << "Input an amount of grains of rice to see how many square are required if each squaure has double the previous square.\n\n";
+	cin >> user_input;
+
+	// number of squares to hold at least 1000 grains of rice 
+	for (int i = 0; total < user_input; ++i) {
+		previous_square = current_square + previous_square;
+		current_square = pow(2, i);
+		total = previous_square + current_square;
+		++square;
+	}
+	cout << "\nIt takes " << square << " squares to get a total of at least " << user_input << " grains of rice." << endl;
+}
