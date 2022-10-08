@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// derive the sum, mean, largest, and smallest distance of a vector set 
+int main() {
+	vector<double> distances;
+	double distance = 0.0;
+
+	cout << "Please input a set of distances.\n";
+
+	while (cin >> distance) { // put values in the vector
+		distances.push_back(distance);
+	}
+
+	double sum = 0;
+	for (int i = 0; i < distances.size(); ++i) { // compute the sum 
+		sum += distances[i];
+	}
+	cout << "The total distance is " << sum << endl;
+
+	sort(distances.begin(), distances.end()); // used to derive the smallest and largest distance
+	cout << "The greatest distance is " << distances[distances.size() - 1] << " while the smallest distance is " << distances[0] << endl;
+
+	cout << "The average distance between the two majoring cities is " << sum / distances.size() << endl; // average distance 
+}
