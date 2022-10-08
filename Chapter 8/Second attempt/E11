@@ -1,0 +1,55 @@
+#include "std_lib_facilities.h"
+
+/*
+Write a function maxv() that returns the largest element of a vector
+argument.
+*/
+
+// grab all the user inputs and put them into a vector
+void get_input(vector<double>& v)
+{
+	double val = 0;
+
+	cout << "Enter some values to find the maximum. Enter '0' once done.\n\n";
+	while (cin >> val && val != 0) {
+		v.push_back(val);
+	}
+
+	if (v.size() < 4) {
+		cout << "\nC'mon man, enter some more values.\n\n";
+		while (cin >> val && val != 0) {
+			v.push_back(val);
+		}
+	}
+}
+
+// find the max value in a set and return it
+double maxv(vector<double> v)
+{
+	sort(v.begin(), v.end());
+
+	return v[v.size() - 1];
+}
+
+int main()
+{
+	try {
+		vector<double> v;
+
+		get_input(v);
+
+		cout << "\nThe largest value in the set is " << maxv(v) << endl;
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
