@@ -1,0 +1,55 @@
+#include "std_lib_facilities.h"
+
+/*
+Write a function print() that prints a vector of ints to cout. Give it two arguments: a string for "labeling" the output and a vector.
+*/
+
+// function to print out the results 
+void print(string label, vector<int>& v)
+{
+	int val = 0;
+	label = "The inputted integers are: ";
+
+	// put user-inputs into a vector
+	while (cin >> val) {
+		v.push_back(val);
+	}
+
+	if (v.size() < 4) {
+		error("Not enough inputs.");
+	}
+
+	// logic for the output 
+	cout << "\n" << label;
+	for (int i = 0; i < v.size(); ++i) {
+		if (i < v.size() - 1) {
+			cout << v[i] << ", ";
+		}
+		else if (i == v.size() - 1) {
+			cout << "and " << v[i];
+		}
+	}
+	cout << endl;
+}
+
+int main() {
+	try {
+		vector<int> v;
+		string label = " ";
+
+		cout << "Please enter more than 3 integers.\n\n";
+		print(label, v);
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
