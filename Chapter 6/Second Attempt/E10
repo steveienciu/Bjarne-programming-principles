@@ -1,0 +1,109 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// function for permutation
+int perm(int a, int b) 
+{
+	int r1 = 1, r2 = 1, r = 0;
+	int c = a - b;
+
+	if (c < 0) {
+		error("Invalid integer inputs.");
+	}
+
+	// for the numerator
+	for (int i = a; a > 0; --a) {
+		r1 *= a;
+	}
+
+	//for the denominator
+	for (int i = c; c > 0; --c) {
+		r2 *= c;
+	}
+
+	// final result
+	r = r1 / r2;
+
+	if (r < 0) {
+		error("How did you even get here.");
+	}
+
+	return r;
+}
+
+// function for combination
+int combo(int a, int b) 
+{
+	int r1 = 1, r = 0;
+	int s = perm(a, b);
+
+	// for the denominator
+	for (int i = b; b > 0; --b) {
+		r1 *= b;
+	}
+
+	// final result 
+	r = s / r1;
+
+	return r;
+}
+
+// calculate either the perm or combo based on user input 
+int main() {
+	try {
+		double a = 0, b = 0;
+		vector<int> check;
+		char ch = ' ';
+
+		cout << "Input 'p' to find the permutation of two numbers or 'c' to find the combination of two number.\n";
+		cin >> ch;
+		if (ch != 'p' && ch != 'c') {
+			error("Invalid character input.");
+		}
+
+		cout << "\nPlease input your first number.\n";
+		cin >> a;
+		check.push_back(a);
+		if (a != check[0]) {
+			error("First input is not an integer.");
+		}
+
+		cout << "\nPlease input your second number.\n";
+		cin >> b;
+		check.push_back(b);
+		if (b != check[1]) {
+			error("Second input is not an integer.");
+		}
+
+		cout << "\n";
+
+		// logic to ouput the perm or combo values 
+		switch (ch) {
+		case 'p':
+			cout << "The permutation of " << a << " and " << b << " is " << perm(a, b) << endl;
+			break;
+		case 'c':
+			cout << "The combination of " << a << " and " << b << " is " << combo(a, b) << endl;
+			break;
+		default:
+			cout << "It's broken\n";
+		}
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
