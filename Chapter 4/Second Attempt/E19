@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// program to write name-and-value pair
+// can maybe modify by showing who's name was inputted multiple times and how many times
+// aslo if there were more than one name entered twice 
+int main() {
+
+	vector<int> values;
+	vector<string> names;
+	int value = 0, n = 0;
+	string name = " ";
+
+	cout << "Please input a name followed by their corresponding value. Input 'No more' once finished.\n\n";
+
+	while (cin >> name >> value && name != "no") {
+		names.push_back(name);
+		values.push_back(value);
+	}
+
+	// check to see if there are duplicated words
+	cout << "\n";
+	for (int i = 0; i < names.size(); ++i) {
+		for (int j = 0; j < names.size(); ++j) {
+			if (i != j && names[j] == names[i]) { // if duplicate occurs, increase n and break out of loop
+				++n; // if name entered twice then n is 2 not 1 since it checks all parts and see there are 2 of the same
+				break;
+			}
+		}
+	}
+	
+	// output error message or name-value pair
+	if (n > 0) {
+		cout << "There was name(s) that was inputted more than once. Please try again.\n";
+	}
+	else if (n == 0) {
+		for (int i = 0; i < names.size(); ++i) {
+			cout << "(" << names[i] << ", " << values[i] << ")" << endl;
+		}
+	}
+}
