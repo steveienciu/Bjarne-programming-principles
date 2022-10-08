@@ -1,0 +1,80 @@
+#include "std_lib_facilities.h"
+
+// function to allow users to input any integer
+void user_input(vector<int>& v)
+{
+	int val = 0;
+
+	cout << "Please input some integers which will get reversed using two algorithms. Enter 'l' when done.\n\n";
+
+	while (cin >> val) {
+		v.push_back(val);
+	}
+
+	if (v.size() < 5) {
+		error("What is the point of reversing less than 5 numbers.");
+	}
+}
+
+// first algorithm to output the reversed order 
+void swap1(const vector<int>& v11)
+{
+	vector<int> v12;
+
+	// reverse the order of the inputted numbers
+	for (int i = v11.size() - 1; i >= 0; --i) {
+		v12.push_back(v11[i]);
+	}
+
+	// output the reversed order 
+	cout << "\nUsing the first algorithm, the reversed order of the inputted values are: ";
+	for (int i = 0; i < v12.size(); ++i) {
+		if (i < v12.size() - 1) {
+			cout << v12[i] << ", ";
+		}
+		else if (i == v12.size() - 1) {
+			cout << "and " << v12[i];
+		}
+		else {
+			error("What in the world happened.");
+		}
+	}
+	cout << endl;
+	// this function does not effect the vector for the next function becaause v12 is being manipulated and not v11
+}
+
+// second algorithm to output the reversed order 
+void swap2(const vector<int>& v2)
+{
+	// output the reversed order 
+	cout << "\nUsing the second algorithm, the reversed order of the inputted values are: ";
+	for (int i = 0; i < v2.size(); ++i) {
+		if (i < v2.size() - 1) {
+			cout << v2[v2.size() - i - 1] << ", ";
+		}
+		else if (i == v2.size() - 1) {
+			cout << "and " << v2[v2.size() - i - 1];
+		}
+	}
+	cout << endl;
+}
+
+int main()
+{
+	try {
+		vector<int> final;
+		user_input(final);
+		swap1(final);
+		swap2(final);
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
