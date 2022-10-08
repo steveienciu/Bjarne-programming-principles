@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// program that converts digits to corresponding spelled out value and vice versa
+int main() {
+
+	vector<string> numb(10);
+	numb[0] = "zero";
+	numb[1] = "one";
+	numb[2] = "two";
+	numb[3] = "three";
+	numb[4] = "four";
+	numb[5] = "five";
+	numb[6] = "six";
+	numb[7] = "seven";
+	numb[8] = "eight";
+	numb[9] = "nine";
+
+	// output what is required 
+	for (int i = 0; i < numb.size(); ++i) {
+		cout << "The input " << i << " gives the output " << numb[i] << endl;
+		cout << "The input " << numb[i] << " gives the output " << i << endl;
+	}
+}
