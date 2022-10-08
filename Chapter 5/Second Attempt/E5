@@ -1,0 +1,82 @@
+#include <iostream>
+
+using namespace std;
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// converts Celsius to Kelvin
+double ctok(double c1) {
+
+	// pre-condition: temperature in Celcius is greater than or equal to -273.15
+	if (c1 < -273.15) {
+		error("The value in Celcius is less than -273.15 which is impossible. Please try again.\n\n");
+	}
+	double k1 = c1 + 273.15;
+
+	// post-condition: outputs temperature in Kelvin greater than or equal to zero
+	if (k1 < 0) {
+		error("The value in Kelvin is less than 0 which is impossible. Please try again\n\n");
+	}
+	return k1;
+}
+
+// convert Kelvin to Celcius 
+double ktoc(double k2) {
+
+	// pre-condition: temperature in Kelvin is greater than or equal to 0
+	if (k2 < 0) {
+		error("The value in Kelvin is less than 0 which is impossible. Please try again.\n\n");
+	}
+	double c2 = k2 - 273.15;
+
+	// post-condition: outputs temperature in Celcius greater than or equal to -273.15
+	if (c2 < -273.15) {
+		error("The value in Celcius is less than -275.15 which is impossible. Please try again\n\n");
+	}
+	return c2;
+}
+
+int main() {
+	try {
+		double c = 0.0; // variable for celcius value
+		double k = 0.0; // variable for kelvin value 
+		char pick = ' '; // variable for user to either pick ktoc or ctok
+
+		// allow user to select their preferred conversion
+		cout << "Enter '1' for Celcius to Kelvin conversion or '2' for Kelvin to Celcius conversion.\n\n";
+		cin >> pick;
+
+		if (pick == '1') {
+			cout << "\n\nPlease input a number in Celcius to see its corresponding Kelvin value.\n\n";
+			cin >> c;
+
+			double k = ctok(c);
+			cout << "\n\n" << c << " degrees Celcius is " << k << " Kelvins.\n" << endl;
+		}
+		else if (pick == '2') {
+			cout << "\n\nPlease input a number in Kelvin to see its corresponding Celcius value.\n\n";
+			cin >> k;
+
+			double c = ktoc(k);
+			cout << "\n\n" << k << " Kelvins is " << c << " degrees Celcius.\n" << endl;
+		}
+		else {
+			error("Incorrect value. Please enter '1' or '2' for temperature conversion.\n\n");
+		}
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs 
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
