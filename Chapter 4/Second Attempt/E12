@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// find all the primes from 1 to user specified number
+int main() {
+
+	vector<int> primes;
+	int p1 = 2, p2 = 3, max = 0;
+
+	primes.push_back(p1);
+	primes.push_back(p2);
+
+	cout << "Prime numbers will be found from 1 to a user defined value. Please specifiy a value.\n\n";
+	cin >> max;
+
+	// mod (%) returns the remainder!!!!
+	for (int i = 4; i <= max; ++i) {
+		if (i < 8 && i % 2 != 0 && i % 3 != 0) {
+			primes.push_back(i);
+		}
+		else if (i > 7 && i % 2 != 0 && i % 3 != 0 && i % 5 != 0 && i % 7 != 0) {
+			primes.push_back(i);
+		}
+	}
+
+	// output the prime numbers
+	cout << "\nThe primes from 1 to " << max << " are: ";
+	for (int i = 0; i < primes.size(); ++i) {
+		if (i < (primes.size() - 1)) {
+			cout << primes[i] << ", ";
+		}
+		else {
+			cout << "and " << primes[i] << endl;
+		}
+	}
+}
