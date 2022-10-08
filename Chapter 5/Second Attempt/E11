@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// program that writes out the Fibonacci series 
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+int main() {
+	try {
+		vector<int> fibs;
+		int fib = 1, sum = 0, n = 0;
+		fibs.push_back(fib);
+
+		cout << "Please enter how many numbers you want to see from the Fibonacci sequence (greater than 1):\n\n";
+		cin >> n;
+
+		if (n < 2) {
+			error("Invalid number inputted.\n");
+		}
+
+		// logic to find the next Fibonacci number
+		for (int i = 0; i < n - 1; ++i) {
+			if (i == 0) {
+				sum += fibs[i];
+				fibs.push_back(sum);
+			}
+			else if (i > 0) {
+				sum += fibs[i - 1];
+				fibs.push_back(sum);
+			}
+		}
+
+		// logic for the output 
+		cout << "\nThe first " << n << " numbers in the Fibonacci sequence are: ";
+		for (int i = 0; i < fibs.size(); ++i) {
+			if (i < fibs.size() - 1) {
+				cout << fibs[i] << ", ";
+			}
+			else if (i < fibs.size()) {
+				cout << "and " << fibs[i] << endl;
+			}
+		}
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs 
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
