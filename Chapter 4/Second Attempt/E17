@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// program that find the mode of set of strings 
+int main() {
+
+	vector<string> words;
+	vector<string> modes;
+	int f1 = 0, f2 = 1;
+	string word = " ", n1 = " ", n2 = " ";
+
+	cout << "Input a set of at least 5 words. End the program by entering 'l'.\n\n";
+
+	while (cin >> word && word != "l") {
+		words.push_back(word);
+	}
+
+	sort(words.begin(), words.end());
+
+	// logic to find the mode 
+	for (int i = 0; i < words.size(); ++i) {
+		if (i == 0 || words[i - 1] == words[i]) { // cant talk about a previous without printing the first word 
+			n1 = words[i];
+			++f1;
+		}
+		else if (words[i - 1] != words[i]) { // reset the counter to one 
+			f1 = 1;
+		}
+		if (f1 == f2) {
+			modes.push_back(n1); // vector for if there are multiple modes 
+		}
+		else if (f1 > f2) {
+			f2 = f1;
+			n2 = n1;
+			modes.clear(); // clear the vector 
+			modes.push_back(n2); // put the new mode in the vector 
+		}
+	}
+
+	// logic to output the mode if there is one
+	if (modes.size() > 1 && modes[0] == modes[1]) { // remember that order matters for && and || operations 
+		cout << "\nThere is no mode.\n";
+	}
+	else {
+		cout << "\nThe mode is: ";
+		for (int i = 0; i < modes.size(); ++i) {
+			// output when there is only one mode
+			if (modes.size() == 1) {
+				cout << modes[i];
+			}
+			// output when there is more than one mode 
+			if (i < modes.size() - 1) {
+				cout << modes[i] << ", ";
+			}
+			else if (i == modes.size() - 1 && modes.size() > 1) {
+				cout << "and " << modes[i];
+			}
+		}
+		cout << " which appeared " << f2 << " times.\n";
+
+		// logic to output the max and min
+		cout << "\nThe first word in alphabetical order is " << words[0] << " and the last is " << words[words.size() - 1] << endl;
+	}
+}
