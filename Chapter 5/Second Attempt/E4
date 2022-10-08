@@ -1,0 +1,47 @@
+#include <iostream>
+
+using namespace std;
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+double ctok(double c) { // converts Celsius to Kelvin
+
+	// pre-condition: temperature in Celcius is greater than or equal to -273.15
+	if (c < -273.15) {
+		error("The value in Celcius is less than -273.15 which is impossible. Please try again.\n\n");
+	}
+	double k = c + 273.15;
+
+	// post-condition: outputs temperature in Kelvin greater than or equal to zero
+	if (k < 0) {
+		error("The value in Kelvin is less than 0 which is impossible. Please try again\n\n");
+	}
+	return k;
+}
+
+int main() {
+	try {
+		double c = 0.0;
+
+		cout << "Please input a number in Celcius to see its corresponding Kelvin value.\n\n";
+		cin >> c;
+
+		double k = ctok(c);
+		cout << "\n\n" << c << " degrees Celcius is " << k << " Kelvins.\n" << endl;
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs 
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
