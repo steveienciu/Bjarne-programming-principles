@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// program that reads digits and composes them into integers
+int main() {
+	try {
+		vector<char> userinput;
+		vector<int> result;
+		char val = ' ';
+		int fin = 0;
+		string s1 = "thousand(s)", s2 = "hundred(s)", s3 = "ten(s)", s4 = "one(s)";
+
+		cout << "Input at most a four digit number which will then be displayed into its corresponding integers. Enter 'l' when done.\n\n";
+
+		// put the user inputs into a vector
+		while (cin >> val && val != 'l') {
+			if (val < '0' || val > '9') {
+				error("Invalid input.");
+			}
+			userinput.push_back(val);
+		}
+
+		if (userinput.size() > 4 || userinput.size() == 0) {
+			error("Invalid value size");
+		}
+
+		// transform char into the proper int 
+		for (int i = 0; i < userinput.size(); ++i) {
+			fin = userinput[i] - '0';
+			result.push_back(fin);
+		}
+
+		// logic for the output 
+		cout << "\n";
+		for (int i = 0; i < result.size(); ++i) {
+			cout << result[i];
+		}
+		cout << " is ";
+		if (result.size() == 4) {
+			cout << result[0] << " " << s1 << " and " << result[1] << " " << s2 << " and " << result[2] << " " << s3 << " and " << result[3] << " " << s4;
+		}
+		else if (result.size() == 3) {
+			cout << result[0] << " " << s2 << " and " << result[1] << " " << s3 << " and " << result[2] << " " << s4;
+		}
+		else if (result.size() == 2) {
+			cout << result[0] << " " << s3 << " and " << result[1] << " " << s4;
+		}
+		else if (result.size() == 1) {
+			cout << result[0] << " " << s4;
+		}
+		cout << "\n";
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
