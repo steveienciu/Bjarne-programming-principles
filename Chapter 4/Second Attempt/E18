@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// program to solve the quadratic equation. Assume no complex numbers
+int main() {
+
+	double a = 0, b = 0, c = 0, x1 = 0, x2 = 0;
+
+	cout << "Please enter three numbers for the equation taking the form of ax^2+bx+c=0. The roots will be calculated.\n";
+	cout << "Enter 'f' when finished.\n\n";
+	
+	while (cin >> a >> b >> c) {
+		double square_root = pow(b, 2) - (4 * a * c);
+		if (a == 0 || square_root < 0) { // check for invalid inputs 
+			if (a == 0) {
+				cout << "\nYour first value was zero which provided values of infinity. Please input again.\n\n";
+			}
+			else if (square_root < 0) {
+				cout << "\nThe value under the sqaure root is negative which is invalid (for now). Please input again.\n\n";
+			}
+		}
+		else { // if inputs are okay, calcualte the roots
+			x1 = (-b + sqrt(square_root)) / (2 * a);
+			x2 = (-b - sqrt(square_root)) / (2 * a);
+			cout << "\nThe two roots are: " << x1 << " and " << x2 << ".\n\n";
+		}
+	} 
+}
