@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// program that uses a user input n and outputs the first n primes 
+int main() {
+
+	vector<int> primes;
+	int p1 = 2, p2 = 3, n = 0, n1 = 2;
+
+	primes.push_back(p1);
+	primes.push_back(p2);
+
+	cout << "Please input a value n to see the first n primes.\n\n";
+	cin >> n;
+
+	// mod (%) returns the remainder!!!!
+	for (int i = 4; n1 != n; ++i) {
+		if (i < 8 && i % 2 != 0 && i % 3 != 0) {
+			primes.push_back(i);
+			++n1;
+		}
+		else if (i > 7 && i % 2 != 0 && i % 3 != 0 && i % 5 != 0 && i % 7 != 0) {
+			primes.push_back(i);
+			++n1;
+		}
+	}
+
+	// output the prime numbers
+	cout << "\nThe first " << n << " primes are: ";
+	for (int i = 0; i < primes.size(); ++i) {
+		if (i < (primes.size() - 1)) {
+			cout << primes[i] << ", ";
+		}
+		else {
+			cout << "and " << primes[i] << endl;
+		}
+	}
+}
