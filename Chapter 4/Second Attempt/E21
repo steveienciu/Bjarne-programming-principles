@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// modified program to output value to corresponding score or 'score not found' 
+int main() {
+
+	vector<int> values;
+	vector<string> names;
+	vector<string> names_with_number;
+	int value = 0, n1 = 0, n2 = 0, score = 0;
+	string name = " ";
+	string lookupn = " ";
+
+	cout << "Please input a name followed by their corresponding value. Input 'l' and 0 once finished.\n\n";
+	// if want to use cin after a while loop, need to get out of loop instead of giving it an error
+	while (cin >> name >> value && name != "l" && value != 0) {
+		names.push_back(name);
+		values.push_back(value);
+	}
+
+	// check to see if there are duplicated words
+	cout << "\n";
+	for (int i = 0; i < names.size(); ++i) {
+		for (int j = 0; j < names.size(); ++j) {
+			if (i != j && names[j] == names[i]) { // if duplicate occurs, increase n and break out of loop
+				++n1;
+				break;
+			}
+		}
+	}
+
+	// output error message or name-value pair depending on n1 counter 
+	if (n1 > 0) {
+		cout << "There was name(s) that was inputted more than once. Please try again.\n";
+	}
+	else if (n1 == 0) {
+		for (int i = 0; i < names.size(); ++i) {
+			cout << "(" << names[i] << ", " << values[i] << ")" << endl;
+		}
+
+		cout << "\nEnter a score to find its corresponding name\n";
+		cin >> score;
+
+		// see if the inputted scotr is in the vecotr and if so add 1 to the counter 
+		for (int i = 0; i < names.size(); ++i) {
+			if (score == values[i]) {
+				lookupn = names[i];
+				names_with_number.push_back(lookupn);
+				++n2;
+			}
+		}
+
+		// output on whether or not the score is found in the vector
+		if (n2 > 0) {
+			cout << "\nThe score " << score << " associated with the name(s) is ";
+			for (int i = 0; i < names_with_number.size(); ++i) {
+				if (names_with_number.size() == 1) {
+					cout << names_with_number[i] << endl;
+				}
+				if (i < (names_with_number.size() - 1)) {
+					cout << names_with_number[i] << ", ";
+				}
+				else if(i == names_with_number.size() - 1 && names_with_number.size() > 1) {
+					cout << "and " << names_with_number[i] << endl;
+				}
+			}
+		}
+		else if (n2 == 0) {
+			cout << "\nScore not found.\n";
+		}
+	}
+}
