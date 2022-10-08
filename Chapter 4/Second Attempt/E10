@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// program to run a rock, paper, scissors game
+int main() {
+
+	char user = ' ';
+	int games = 0;
+	string begin = "Rock, paper, scissors!";
+	vector<char> machine(3);
+	machine[0] = 'r';
+	machine[1] = 'p';
+	machine[2] = 's';
+
+	cout << "Welcome to rock, paper, scissors! Please input a character and try to but the machine.\n";
+	cout << "r = rock, p = paper, and s = scissor.\n" << "Press 'l' to leave the game.\n";
+
+	// if player has played an even amount of times, they win. if player has played an odd amount of time, they lose
+	while (cin >> user) {
+		++games;
+		switch (user) {
+		case 'r':
+			if (games % 2 == 0) {
+				cout << begin << " You chose " << user << " and the machine chose " << machine[2] << ". You Win!\n";
+			}
+			else if (games % 2 == 1) {
+				cout << begin << " You chose " << user << " and the machine chose " << machine[1] << ". You Loose!\n";
+			}
+			break;
+		case 'p':
+			if (games % 2 == 0) {
+				cout << begin << " You chose " << user << " and the machine chose " << machine[0] << ". You Win!\n";
+			}
+			else if (games % 2 == 1) {
+				cout << begin << " You chose " << user << " and the machine chose " << machine[2] << ". You Loose!\n";
+			}
+			break;
+		case 's':
+			if (games % 2 == 0) {
+				cout << begin << " You chose " << user << " and the machine chose " << machine[1] << ". You Win!\n";
+			}
+			else if (games % 2 == 1) {
+				cout << begin << " You chose " << user << " and the machine chose " << machine[0] << ". You Loose!\n";
+			}
+			break;
+		default:
+			cout << "Wrong input, please try again.\n";
+		}
+	}
+}
