@@ -1,0 +1,83 @@
+#include <iostream>
+
+using namespace std;
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// converts Celsius to Fahrenheit 
+double ctof(double c1) {
+
+	// pre-condition: temperature in Celcius is greater than or equal to -273.15
+	if (c1 < -273.15) {
+		error("The value in Celcius is less than -273.15 which is impossible. Please try again.\n\n");
+	}
+	double f1 = 1.8 * c1 + 32;
+
+	// post-condition: outputs temperature in Kelvin greater than or equal to -459.67
+	if (f1 < -459.67) {
+		error("The value in Fahrenhiet is less than -459.67 which is impossible. Please try again\n\n");
+	}
+	return f1;
+}
+
+// convert Kelvin to Celcius 
+double ftoc(double f2) {
+
+	// pre-condition: temperature in Celcius is greater than or equal to -459.67
+	if (f2 < -459.67) {
+		error("The value in Fahrenhiet is less than -459.67 which is impossible. Please try again.\n\n");
+	}
+	double c2 = ((f2 - 32) * 5) / 9;
+
+	// post-condition: outputs temperature in Fahrenhiet greater than or equal to -273.15
+	if (c2 < -273.15) {
+		error("The value in Celcius is less than -275.15 which is impossible. Please try again\n\n");
+	}
+	return c2;
+}
+
+// user picked conversion 
+int main() {
+	try {
+		double c = 0.0; // variable for celcius value
+		double f = 0.0; // variable for fahrenhiet value 
+		char pick = ' '; // variable for user to either pick ktoc or ctok
+
+		// allow user to select their preferred conversion
+		cout << "Enter '1' for Celcius to Fahrenhiet conversion or '2' for Fahrenhiet to Celcius conversion.\n\n";
+		cin >> pick;
+
+		if (pick == '1') {
+			cout << "\n\nPlease input a number in Celcius to see its corresponding Fahrenhiet value.\n\n";
+			cin >> c;
+
+			f = ctof(c);
+			cout << "\n\n" << c << " degrees Celcius is " << f << " degrees Fahrenhiet.\n" << endl;
+		}
+		else if (pick == '2') {
+			cout << "\n\nPlease input a number in Fahrenhiet to see its corresponding Celcius value.\n\n";
+			cin >> f;
+
+			c = ftoc(f);
+			cout << "\n\n" << f << " degrees Fahrenhiet is " << c << " degrees Celcius.\n" << endl;
+		}
+		else {
+			error("Incorrect value. Please enter '1' or '2' for temperature conversion.\n\n");
+		}
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs 
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
