@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// reads series of numbers and user inputs how many of those numbers they wanted to be summed 
+int main() {
+	try {
+		vector<int> values;
+		int value = 0, n = 0, sum = 0;
+
+		cout << "Please enter some positive numbers (press '0' at prompt to stop):\n\n";
+		while (cin >> value && value != 0) {
+			// display error if negative number was inputted
+			if (value < 0) {
+				error("Negaitve number was inputted. Please input only positive numbers.\n");
+			}
+			values.push_back(value);
+		}
+
+		cout << "\nPlease enter how many of the numbers you wish to sum starting form the first:\n\n";
+		cin >> n;
+
+		// errors for out of range values 
+		if (n <= 0) {
+			error("Negative number or zero was inputted. Please input a positive number.\n");
+		}
+		else if (n > values.size()) {
+			error("Number is out of range. Please input a number less than or equal to the size of the data set.\n");
+		}
+
+		// compute the sum
+		for (int i = 0; i < n; ++i) {
+			sum += values[i];
+		}
+
+		// logic to produce the desired output 
+		cout << "\nThe sum of the first " << n << " numbers: ";
+		for (int i = 0; i < n; ++i) {
+			if (i <= (n - 2)) {
+				cout << values[i] << ", ";
+			}
+			else if (i == (n - 1)) {
+				cout << "and " << values[i];
+			}
+		}
+		cout << " is " << sum << endl;
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs 
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
