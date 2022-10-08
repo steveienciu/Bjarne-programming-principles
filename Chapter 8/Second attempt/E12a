@@ -1,0 +1,83 @@
+/*
+#include "std_lib_facilities.h"
+
+/*
+Write a function that finds the smallest and the largest element of a
+vector argument and also computes the mean and the median. Do not
+use global variables. Either return a struct containing the results or pass
+them back through reference arguments
+*/
+
+// part (a) done by returning values through a refernce 
+
+// collect user inputs into a vector
+void user_input(vector<double>& v)
+{
+	double val = 0;
+
+	cout << "Please input at least 10 numbers.\n";
+	cout << "The smallest and largest values will be found along with the mean and median.\n\n";
+
+	while (cin >> val && val != 0) {
+		v.push_back(val);
+	}
+
+	if (v.size() < 10) {
+		int n = 10 - v.size();
+		cout << "You did not input 10 numbers. Please enter the remaining " << n << " number(s).\n\n";
+		for (int i = 0; i < n; ++i) {
+			cin >> val;
+			v.push_back(val);
+		}
+	}
+}
+
+// find the min, max, median, and mean
+void computations(vector<double>& v, double& max, double& min, double& median, double& mean)
+{
+	
+	sort(v.begin(), v.end());
+
+	min = v[0];
+	max = v[v.size() - 1];
+
+	for (int i = 0; i < v.size(); ++i) {
+		mean += v[i];
+	}
+
+	if (v.size() % 2 != 0) {
+		median = v[v.size() / 2];
+	}
+	else if (v.size() % 2 == 0) {
+		median = (v[(v.size() - 1) / 2] + v[(v.size() + 1) / 2]) / 2;
+	}
+	else {
+		error("What happened.");
+	}
+}
+
+int main()
+{
+	try {
+		vector<double> v;
+		double min = 0, max = 0, median = 0, mean = 0;
+		user_input(v);
+		cout << endl;
+		computations(v, max, min, median, mean);
+		cout << "The smallest elemnt is " << min << " and the largest element is " << max << ".\n";
+		cout << "The mean is " << mean << " and the median is " << median << ".\n";
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
+*/
