@@ -1,0 +1,79 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+/*
+Write a program that checks if a sentence is correct according to the
+"English" granunar in §6.4. 1. Assume that every sentence is terminated
+by a fuU stop (.) surrounded by whitespace. For example, birds fly but
+the fish swim . is a sentence, but birds fly but the fish swim (terminating
+dot missing) and birds fly but the fish swim. (no space before dot) are
+not. For each sentence entered, the program should simply respond
+"OK" or "not OK."
+*/
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// check to see if sentence meet the standard 
+int main() {
+	try {
+		string word = " ";
+		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0, counter5 = 0, counter = 0;
+		vector<string> words;
+		vector<string> end{ "." };
+		vector<string> article{ "the" };
+		vector<string> noun{ "birds", "fish", "C++" };
+		vector<string> conjuction{ "and", "or", "but" };
+		vector<string> verb{ "rules", "fly", "swim" };
+
+		cout << "Input a sentence. If correct, 'OK' will be outputted.\n\n";
+
+		while (cin >> word && word != "l") {
+			words.push_back(word);
+		}
+
+		for (int i = 0; i < words.size(); ++i) {
+			if (article[0] == words[i]) {
+				++counter1;
+			}
+			else if (noun[0] == words[i] || noun[1] == words[i] || noun[2] == words[i]) {
+				++counter2;
+			}
+			else if (conjuction[0] == words[i] || conjuction[1] == words[i] || conjuction[2] == words[i]) {
+				++counter3;
+			}
+			else if (verb[0] == words[i] || verb[1] == words[i] || verb[2] == words[i]) {
+				++counter4;
+			}
+			else if (end[0] == words[i]) {
+				++counter5;
+			}
+		}
+
+		counter = counter1 + counter2 + counter3 + counter4 + counter5;
+
+		if (counter == 7 && counter1 == 1 && counter2 == 2 && counter3 == 1 && counter4 == 2 && counter5 == 1 && words.size() == 7) {
+			cout << "\n\nOK\n\n";
+		}
+		else if (counter > 7 || counter < 7 || counter1 > 1 || counter2 > 2 || counter3 > 2 || counter4 > 2 || counter5 > 1 || words.size() > 7) {
+			cout << "\n\nnot OK\n\n";
+		}
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
