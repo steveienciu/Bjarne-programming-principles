@@ -22,6 +22,7 @@ double ctok(double c) { // converts Celsius to Kelvin
 	return k;
 }
 
+// find the Kelvin value from the Celsius value
 int main() {
 	try {
 		double c = 0.0;
