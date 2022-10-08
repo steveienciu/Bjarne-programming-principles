@@ -1,0 +1,31 @@
+#include <iostream>
+
+using namespace std;
+
+// building a simple caluator which: addition, subtraction, division, multiplication, and modulus 
+int main() {
+	double val1 = 0, val2 = 0;
+	char op = ' ';
+
+	cout << "Please input two numbers and an operation to be performed on them. Enter to 'l' to leave.\n";
+	while (cin >> val1 >> val2 >> op) {
+		switch (op) {
+		case '+':
+			cout << "The sum of " << val1 << " and " << val2 << " is " << val1 + val2 << endl;
+			break;
+		case '-':
+			cout << "The difference of " << val1 << " and " << val2 << " is " << val1 - val2 << endl;
+			break;
+		case '*':
+			cout << "The multiplication of " << val1 << " and " << val2 << " is " << val1 * val2 << endl;
+			break;
+		case '/':
+			cout << "The quotient of " << val1 << " and " << val2 << " is " << val1 / val2 << endl;
+			break;
+		default:
+			cout << "Invalid operator was inputting. Please try again\n";
+			break;
+		}
+	}
+	cout << "You have finished with your calculations\n";
+}
