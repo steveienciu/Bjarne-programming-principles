@@ -39,6 +39,8 @@ double ktoc(double k2) {
 	return c2;
 }
 
+// let the user pick what conversion they want to perform
+// either Celcius to Kelvin or Kelvin to Celsius
 int main() {
 	try {
 		double c = 0.0; // variable for celcius value
