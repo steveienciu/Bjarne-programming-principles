@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// program that find the mode of set of positive integers 
+int main() {
+	
+	vector<int> values;
+	vector<int> modes;
+	int value = 0, n1 = 0, n2 = 0, f1 = 0, f2 = 1;
+
+	cout << "Input a set of at least 5 positive integers.\n\n";
+	
+	while (cin >> value) {
+		values.push_back(value);
+	}
+
+	sort(values.begin(), values.end());
+
+	// logic to find the mode 
+	for (int i = 0; i < values.size(); ++i) {
+		if (i == 0 || values[i - 1] == values[i]) { // cant talk about a previous without printing the first word 
+			n1 = values[i];
+			++f1;
+		}
+		else if (values[i - 1] != values[i]) { // reset the counter to one 
+			f1 = 1;
+		}
+		if (f1 == f2) {
+			modes.push_back(n1); // vector for if there are multiple modes 
+		}
+		else if (f1 > f2) {
+			f2 = f1;
+			n2 = n1;
+			modes.clear(); // clear the vector 
+			modes.push_back(n2); // put the new mode in the vector 
+		}
+	}
+	
+	// logic to output the mode if there is one
+	if (modes.size() > 1 && modes[0] == modes[1]) { // remember that order matters for && and || operations 
+		cout << "There is no mode.\n";
+	}
+	else {
+		cout << "The mode is: ";
+		for (int i = 0; i < modes.size(); ++i) {
+			// output when there is only one mode
+			if (modes.size() == 1) {
+				cout << modes[i];
+			}
+			// output when there is more than one mode 
+			if (i < modes.size() - 1) {
+				cout << modes[i] << ", ";
+			}
+			else if (i == modes.size() - 1 && modes.size() > 1) {
+				cout << "and " << modes[i];
+			}
+		}
+		cout << " which appeared " << f2 << " times.\n";
+	}
+}
