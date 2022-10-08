@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// modification of previous program to output value to corresponding score or 'name not found' 
+int main() {
+
+	vector<int> values;
+	vector<string> names;
+	int value = 0, n1 = 0, n2 = 0, score = 0;
+	string name = " "; 
+	string lookupn = " ";
+
+	cout << "Please input a name followed by their corresponding value. Input 'l' and 0 once finished.\n\n";
+	// if want to use cin after a while loop, need to get out of loop instead of giving it an error
+	while (cin >> name >> value && name != "l" && value != 0) {
+		names.push_back(name);
+		values.push_back(value);
+	}
+	
+	// check to see if there are duplicated words
+	cout << "\n";
+	for (int i = 0; i < names.size(); ++i) {
+		for (int j = 0; j < names.size(); ++j) {
+			if (i != j && names[j] == names[i]) { // if duplicate occurs, increase n and break out of loop
+				++n1;
+				break;
+			}
+		}
+	}
+
+	// output error message or name-value pair depending on n1 counter 
+	if (n1 > 0) {
+		cout << "There was name(s) that was inputted more than once. Please try again.\n";
+	}
+	else if (n1 == 0) {
+		for (int i = 0; i < names.size(); ++i) {
+			cout << "(" << names[i] << ", " << values[i] << ")" << endl;
+		}
+
+		cout << "\nEnter a name to find its corresponding score\n";
+		cin >> lookupn;
+
+		// see if the inputted name is in the vecotr and if so add 1 to the counter 
+		for (int i = 0; i < names.size(); ++i) {
+			if (lookupn == names[i]) {
+				score = values[i];
+				++n2;
+			}
+		}
+
+		// output on whether or not the name is found in the vector
+		if (n2 == 1) {
+			cout << "\n" << lookupn << " has a score of " << score << endl;
+		}
+		else {
+			cout << "\nName not found.\n";
+		}
+	}
+}
