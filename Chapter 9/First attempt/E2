@@ -1,0 +1,122 @@
+#include "std_lib_facilities.h"
+
+/*
+Design and implement a Name_pairs class holding (name,age) pairs where
+name is a string and age is a double. Represent that as a vector<String>
+(called name) and a vector<double> (called age) member. Provide an
+input operation read_names() that reads a series of names. Provide a
+read_ages() operation that prompts the user for an age for each name.
+Provide a print() operation that prints out the (name[i],age[i]) pairs (one
+per line) in the order determined by the name vector. Provide a sort() operation that sorts the name vector in a1phabetical order and reorganizes
+the age vector to match
+*/
+
+class Name_pairs {
+public:
+	// these functions can be used anywhere 
+	void read_names(); // member function
+	void read_ages(); // member function
+	void print(); // member function
+	void sorting(); // member function
+private:
+	// these members can only be used by member functions within the class
+	vector<string> names; // member data
+	vector<double> ages; // member data
+};
+
+// read strings into a vector
+void Name_pairs::read_names()
+{
+	string name;
+	cout << "Please enter some names. Enter 'l' once finished.\n\n";
+
+	while (cin >> name && name != "l") {
+		names.push_back(name);
+	}
+
+	if (names.size() == 0) {
+		error("read_names(): no names were inputted");
+	}
+}
+
+// read double into a vector
+void Name_pairs::read_ages()
+{
+	double age = 0.0;
+	cout << "\nPlease input ages in the order the names were placed.\n\n";
+
+	for (int i = 0; i < names.size(); ++i) {
+		cout << "The age for " << names[i] << " is ";
+		cin >> age;
+		if (age < 0) {
+			// cannot mess up twice in a row, fix this later
+			cout << "\nInvalid age entered. Please try again.\n\n";
+			cin >> age;
+			ages.push_back(age);
+			cout << endl;
+		}
+		else {
+			ages.push_back(age);
+		}
+	}
+
+	// vectors need to be the same size
+	if (ages.size() != names.size()) {
+		error("read_ages(): invalid vector sizes");
+	}
+}
+
+// print the name-age pairs
+void Name_pairs::print()
+{
+	cout << "\nThe name-age pairs are:\n\n";
+	for (int i = 0; i < names.size(); ++i) {
+		cout << "(" << names[i] << ", " << ages[i] << ")\n";
+	}
+}
+
+// sort the name-age pair alphabetically
+void Name_pairs::sorting()
+{
+	vector<string> copy_names = names;
+	vector<double> empty_ages;
+
+	sort(names.begin(), names.end());
+
+	// get the ages in the right order
+	for (int i = 0; i < names.size(); ++i) {
+		for (int j = 0; j < names.size(); ++j) {
+			if (names[i] == copy_names[j]) {
+				empty_ages.push_back(ages[j]);
+			}
+		}
+	}
+
+	ages = empty_ages; // assigned back to private member so print can read it 
+}
+
+int main()
+{
+	try {
+		Name_pairs result;
+
+		vector<string> names;
+		vector<double> ages;
+
+		result.read_names();
+		result.read_ages();
+		result.print();
+		result.sorting();
+		result.print();
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
