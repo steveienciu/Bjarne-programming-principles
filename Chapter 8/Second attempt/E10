@@ -1,0 +1,83 @@
+#include "std_lib_facilities.h"
+
+/*
+Write a function that given two vector<double>s price and weight computes a value (an "index") that is the sum of all price[i)*weight[i].
+*/
+
+// get the user inputs into a vector
+void get_values(vector<double>& weights, vector<double>& prices)
+{
+	double weight = 0, price = 0;
+
+	// get the weight inputs into a vector and prompt to fix their input if messed up
+	cout << "Please enter a lists of weights. Enter '0' once done.\n\n";
+	while (cin >> weight && weight != 0) {
+		if (weight > 0) {
+			weights.push_back(weight);
+		}
+		else if (weight < 0) {
+			cout << "\nYou inputted an invalid weight. Please enter again\n\n";
+			cin >> weight;
+			weights.push_back(weight);
+		}
+	}
+
+	// get the price inputs into a vector and prompt to fix their input if messed up
+	cout << "\nPlease enter a lists of prices corresponding to the wiehgts just inputted. Enter '0' once done.\n\n";
+	while (cin >> price && price != 0) {
+		if (price > 0) {
+			prices.push_back(price);
+		}
+		else if (price < 0) {
+			cout << "\nYou inputted an invalid price. Please enter again\n\n";
+			cin >> price;
+			prices.push_back(price);
+		}
+	}
+
+	// allow the user to add the missing prices if necessary
+	if (prices.size() < weights.size()) {
+		int n = weights.size() - prices.size();
+		cout << "\nYou forgot to enter a price for your last " << n << " weight(s) inputted. Please enter now.\n\n";
+		for (int i = 0; i < n; ++i) {
+			cin >> price;
+			prices.push_back(price);
+		}
+	}
+}
+
+// return the sum of prices[i]*weights[i]
+double print_sum(const vector<double>& weights, const vector<double>& prices)
+{
+	double sum = 0;
+
+	for (int i = 0; i < prices.size(); ++i) {
+		sum += prices[i] * weights[i];
+	}
+
+	return sum;
+}
+
+int main()
+{
+	try {
+		vector<double> weights;
+		vector<double> prices;
+
+		get_values(weights, prices);
+
+		cout << "\nThe sum of the all the indexes are " << print_sum(weights, prices) << endl;
+
+		reutnr 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
