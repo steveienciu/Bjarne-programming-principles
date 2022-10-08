@@ -1,0 +1,90 @@
+#include "std_lib_facilities.h"
+
+/*
+Write a function that finds the smallest and the largest element of a
+vector argument and also computes the mean and the median. Do not
+use global variables. Either return a struct containing the results or pass
+them back through reference arguments
+*/
+
+// part (b) done by using a struct
+
+struct values {
+	double max = 0, min = 0, mean = 0, median = 0;
+};
+
+// collect user inputs into a vector
+void user_input(vector<double>& v)
+{
+	double val = 0;
+
+	cout << "Please input at least 10 numbers.\n";
+	cout << "The smallest and largest values will be found along with the mean and median.\n\n";
+
+	while (cin >> val && val != 0) {
+		v.push_back(val);
+	}
+
+	if (v.size() < 10) {
+		int n = 10 - v.size();
+		cout << "You did not input 10 numbers. Please enter the remaining " << n << " number(s).\n\n";
+		for (int i = 0; i < n; ++i) {
+			cin >> val;
+			v.push_back(val);
+		}
+	}
+}
+
+// find the min, max, median, and mean
+// for structs, need to create function with the structure name and have the struct be one of the parameters
+values computations(vector<double>& v, values& results)
+{
+
+	sort(v.begin(), v.end());
+
+	results.min = v[0];
+	results.max = v[v.size() - 1];
+
+	for (int i = 0; i < v.size(); ++i) {
+		results.mean += v[i];
+	}
+
+	if (v.size() % 2 != 0) {
+		results.median = v[v.size() / 2];
+	}
+	else if (v.size() % 2 == 0) {
+		results.median = (v[(v.size() - 1) / 2] + v[(v.size() + 1) / 2]) / 2;
+	}
+	else {
+		error("What happened.");
+	}
+
+	// can only return the struct
+	return results;
+}
+
+int main()
+{
+	try {
+		values v;
+		vector<double> val;
+
+		user_input(val);
+		computations(val, v);
+
+		cout << "\nThe smallest number is " << v.min << " and the largest number is " << v.max << ".\n";
+		cout << "The mean is " << v.mean << " and the median is " << v.median << ".\n";
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
