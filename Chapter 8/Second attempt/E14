@@ -1,0 +1,163 @@
+#include "std_lib_facilities.h"
+
+/*
+Write a function that takes a vector<String> argument and returns a
+vector<int> containing the number of characters in each string. Also fmd
+the longest and the shortest string and the lexicographically first and last
+string
+*/
+
+// toss the user inputs into a vecotr
+void user_input(vector<string>& words)
+{
+	string word = " ";
+
+	cout << "Please input at least 3 words. Enter 'l' when done.\n\n";
+
+	while (cin >> word && word != "l") {
+		words.push_back(word);
+	}
+
+	// input more strings if not at least 3
+	if (words.size() < 3) {
+		int n = 3 - words.size();
+		cout << "Not enough words were entered. Please enter the remaining " << n << " word(s).\n\n";
+		for (int i = 0; i < n; ++i) {
+			cin >> word;
+			words.push_back(word);
+		}
+	}
+}
+
+// function to find the number of chars in each string
+vector<int> char_in_each_string(const vector<string>& words, vector<int>& values)
+{
+	int value = 0;
+
+	for (int i = 0; i < words.size(); ++i) {
+		value = words[i].size(); // find how many chars are in the words 
+		values.push_back(value);
+	}
+
+	if (words.size() != values.size()) {
+		error("Different vector sizes");
+	}
+
+	// to return a vector function type needs to aa vector 
+	return values;
+}
+
+// print the number of chars in each string
+void print(const vector<int>& values)
+{
+	cout << "\nThe number of characters in each string is ";
+	for (int i = 0; i < values.size(); ++i) {
+		if (i < values.size() - 1) {
+			cout << values[i] << ", ";
+		}
+		else if (i == values.size() - 1) {
+			cout << "and " << values[i];
+		}
+	}
+}
+
+// find the shortest and longest string(s) and print
+// if remember, could get rid of duplicates 
+void length_comp(vector<string>& words, vector<int>& values)
+{
+	vector<int> values_copy = values;
+	vector<string> order;
+	// vector<string> final;
+	vector<string> small_words;
+	vector<string> large_words;
+	int n1 = 0, n2 = 0;
+
+	sort(values.begin(), values.end());
+
+	// order the strings to their corresponding number of chars (value-string pair)
+	for (int i = 0; i < values.size(); ++i) {
+		for (int j = 0; j < values.size(); ++j) {
+			if (values_copy[j] == values[i] && (i == 0 || values[i] != values[i-1])) {
+				order.push_back(words[j]);
+			}
+		}
+	}
+
+	// put the smallest words(s) in a vector and the largest word(s) into another 
+	for (int i = 0; i < values.size(); ++i) {
+		if (values[i] == values[0]) {
+			++n1;
+			small_words.push_back(order[i]);
+		}
+		else if (values[i] == values[values.size() - 1]) {
+			++n2;
+			large_words.push_back(order[i]);
+		}
+	}
+
+	// output the results 
+	cout << "\nThe smallest ";
+	if (n1 == 1) {
+		cout << "string is " << small_words[0];
+	}
+	else if (n1 > 1) {
+		cout << "strings are ";
+	}
+	for (int i = 0; i < small_words.size(); ++i) {
+		if (i < small_words.size() - 1 && n1>1) {
+			cout << small_words[i] << ", ";
+		}
+		else if (i == small_words.size() - 1 && n1 > 1) {
+			cout << "and " << small_words[i];
+		}
+	}
+	cout << "\nThe largest ";
+	if (n2 == 1) {
+		cout << "string is " << large_words[0];
+	}
+	else if (n2 > 1) {
+		cout << "strings are ";
+	}
+	for (int i = 0; i < large_words.size(); ++i) {
+		if (i < large_words.size() - 1 && n1>1) {
+			cout << large_words[i] << ", ";
+		}
+		else if (i == large_words.size() - 1 && n1 > 1) {
+			cout << "and " << large_words[i];
+		}
+	}
+}
+
+// find the lexicographic first and last string
+void lexicographic(vector<string>& words)
+{
+	sort(words.begin(), words.end());
+
+	cout << "\nThe lexicographic first string is " << words[0] << " and the lexicographic last string is " << words[words.size() - 1] << ".\n";
+}
+
+int main()
+{
+	try {
+		vector<int> val;
+		vector<string> words;
+
+		user_input(words);
+		char_in_each_string(words, val);
+		print(val);
+		length_comp(words, val);
+		lexicographic(words);
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
