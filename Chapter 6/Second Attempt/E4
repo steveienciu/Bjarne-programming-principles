@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+/*
+Defme a class Name_value that holds a string and a value. Rework exercise 19 in Chapter 4 to use a
+vector< Name_ value> instead of two vectors. 
+*/
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+// user-defined type for Name_value pair
+class Name_value {
+public:
+	string names;
+	int values;
+};
+
+// input and output the user-defined types 
+int main() {
+	try {
+		Name_value data;
+		vector<Name_value> nv;
+
+		cout << "Input a name value pair\n\n";
+	
+		// input values into the vector
+		while (cin >> data.names >> data.values) {
+			nv.push_back(data);
+		}
+
+		// logic to output the results
+		cout << "\n";
+		for (int i = 0; i < nv.size(); ++i) {
+			cout << "(" << nv[i].names << ", " << nv[i].values << ")\n";
+		}
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
