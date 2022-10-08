@@ -1,0 +1,67 @@
+#include "std_lib_facilities.h"
+
+/*
+Create a vector of Fibonacci numbers and print them using the function
+from exercise 2.
+*/
+
+// construct the Fibonacci sequence 
+void fibonacci(int x, int y, vector<int>& v, int n)
+{
+	x = 1, y = 2, n = 0;
+	int fib = 0;
+	v.push_back(x);
+	v.push_back(y);
+
+	cout << "How many iterations of the fibonacci sequence do you want to see?\n\n";
+	cin >> n;
+	cout << "\nThe first " << n << " numbers of the fibonacci sequence are ";
+
+	if (n < 3) {
+		error("Inputted number was too small.\n");
+	}
+
+	// add the Fibonacci numbers into a vector
+	for (int i = 2; i < n; ++i) {
+		fib = v[i - 2] + v[i - 1];
+		v.push_back(fib);
+	}
+}
+
+// print the Fibonacci sequence 
+void print(const vector<int>& v)
+{
+
+	for (int i = 0; i < v.size(); ++i) {
+		if (i < v.size() - 1) {
+			cout << v[i] << ", ";
+		}
+		else if (i == v.size() - 1) {
+			cout << "and " << v[i];
+		}
+	}
+	cout << endl;
+}
+
+int main()
+{
+	try {
+		int x = 0, y = 0, n = 0;
+		vector<int> v;
+		
+		fibonacci(x, y, v, n);
+		print(v);
+
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
