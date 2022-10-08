@@ -1,0 +1,131 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+
+using namespace std;
+
+// function to throw input error
+void error(string s) {
+	throw runtime_error(s);
+}
+
+/*
+* Program to play bulls and cows which is a guessing game
+* If user guesses right number in right sport, they get a bull
+* If user guesses right number in wrong spot, they get a cow
+*/
+
+int main() {
+	try {
+		vector<int> guesses;
+		int guess = 0, bull = 0, cow = 0, counter = 0, n = 0, mode = 0;
+
+		cout << "Game of Bulls and Cows. Guess the right number in the right spot and you are rewarded with a bull.\n";
+		cout << "Guess the right number but the wrong spot and you will get rewarded with a cow.\n";
+		cout << "Please input four integers from 0-9 and no duplicates.\n";
+		cout << "Input a number to generate a random secret.\n\n";
+		cin >> n;
+		cout << "\n";
+
+		srand(n); // produce a seed 
+
+		vector<int> secret{ rand() % 10, rand() % 10, rand() % 10, rand() % 10 }; // use the seed to produce a random vector
+
+		for (int i = 0; i < secret.size(); ++i) {
+			for (int j = 0; j < secret.size(); ++j) {
+				if (i != j && secret[i] == secret[j]) {
+					++mode;
+				}
+			}
+		}
+
+		if (mode > 0) {
+			error("Random number generator produced a duplicate.\n");
+		}
+
+		while (bull != 4) {
+			++counter; // number of tries
+
+			// put user's guesses into variable
+			for (int i = 0; i < secret.size(); ++i) {
+				cin >> guess;
+				if (guess < 0 || guess > 9) {
+					error("Invalid guess.\n");
+				}
+				guesses.push_back(guess);
+			}
+
+			// logic to determine the number of bulls and cows
+			for (int i = 0; i < guesses.size(); ++i) {
+				if (guesses[i] == secret[i]) {
+					++bull;
+				}
+				for (int j = 0; j < guesses.size(); ++j) {
+					if (i != j && guesses[i] == secret[j]) {
+						++cow;
+						break;
+					}
+				}
+			}
+
+			// logic for output of the number of bulls and cows
+			if (bull == 0 && cow == 0) {
+				cout << "\nYou through up a donut.\n\n";
+			}
+			else if (bull == 1 && cow == 0) {
+				cout << "\n" << bull << " bull.\n\n";
+			}
+			else if (bull == 0 && cow == 1) {
+				cout << "\n" << cow << " cow.\n\n";
+			}
+			else if (bull == 1 && cow > 1) {
+				cout << "\n" << bull << " bull and " << cow << " cows.\n\n";
+			}
+			else if (bull > 1 && cow == 1) {
+				cout << "\n" << bull << " bulls and " << cow << " cow.\n\n";
+			}
+			else if (bull > 1 && cow > 1) {
+				cout << "\n" << bull << " bulls and " << cow << " cows.\n\n";
+			}
+			else if (bull > 1 && cow == 0) {
+				cout << "\n" << bull << " bulls.\n\n";
+			}
+			else if (bull == 0 && cow > 1) {
+				cout << "\n" << cow << " cows.\n\n";
+			}
+			else if (bull == 1 && cow == 1) {
+				cout << "\n" << bull << " bull and " << cow << " cow.\n\n";
+			}
+			else {
+				cout << "\nWeird.\n\n";
+			}
+
+			// reset the variables if user does not guess correctly
+			if (bull != 4) {
+				guesses.clear();
+				bull = 0;
+				cow = 0;
+			}
+		}
+
+		// logic for when user guesses correctly
+		cout << "Congrats, you won.\n";
+		if (counter == 1) {
+			cout << "It took you " << counter << " try.\n\n";
+		}
+		else {
+			cout << "It took you " << counter << " tries.\n\n";
+		}
+		return 0;
+	}
+	// e.what() extracts message from the runtime_error
+	catch (runtime_error& e) {
+		cerr << "\nruntime error: " << e.what() << "\n"; // cerr used for error outputs
+		return 1;
+	}
+	// used to handle excpetions of any type whatsoever
+	catch (...) {
+		cerr << "\nSomething went wrong\n";
+		return 2;
+	}
+}
