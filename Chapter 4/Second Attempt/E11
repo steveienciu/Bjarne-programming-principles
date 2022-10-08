@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// find all the primes from 1 to 100
+int main() {
+
+	vector<int> primes;
+	int p1 = 2, p2 = 3;
+
+	primes.push_back(p1);
+	primes.push_back(p2);
+
+	// mod (%) returns the remainder!!!!
+	for (int i = 4; i < 100; ++i) {
+		if (i < 8 && i % 2 != 0 && i % 3 != 0) {
+			primes.push_back(i);
+		}
+		else if (i > 7 && i % 2 != 0 && i % 3 != 0 && i % 5 != 0 && i % 7 != 0) {
+			primes.push_back(i);
+		}
+	}
+
+	// output the prime numbers
+	cout << "The primes from 1 to 100 are: ";
+	for (int i = 0; i < primes.size(); ++i) {
+		if (i < (primes.size() - 1)) {
+			cout << primes[i] << ", ";
+		}
+		else {
+			cout << "and " << primes[i] << endl;
+		}
+	}
+}
